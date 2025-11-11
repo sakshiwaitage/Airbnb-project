@@ -1,0 +1,120 @@
+<style>
+  /*  Navbar Styling */
+  .navbar {
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Search Button */
+  .btn-search {
+    background-color: #fe424d;
+    color: white;
+    border-radius: 25px;
+    padding: 0.4rem 1rem;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-search:hover {
+    background-color: #ff5a5f;
+    color: white;
+  }
+
+  .btn-search i {
+    margin-right: 0.5rem;
+  }
+
+  /* Search Input  */
+  .search-input {
+    border-radius: 25px;
+    margin-left: 3rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    font-size: 0.9rem;
+    width: 300px;
+    text-align: center;
+  }
+
+  /* ====== Mobile Responsiveness ====== */
+  @media (max-width: 768px) {
+    .search-input {
+      width: 70%; /* smaller input */
+      font-size: 0.85rem;
+      margin-right: 0.4rem;
+    }
+    .btn-search {
+      padding: 0.4rem 0.8rem; /* smaller button */
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-search i {
+      margin-right: 0;
+    }
+    .navbar form {
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 813px) {
+  form[role="search"] {
+    flex-wrap: nowrap !important; /* prevents wrapping */
+    width: 100%; /* ensures full width */
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .btn-search {
+    flex-shrink: 0;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+
+    <!-- Explore (always beside logo) -->
+    <a class="nav-link d-none d-md-block" href="/listings">Explore</a>
+
+    <!-- Mobile toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      
+      <!-- Search Bar -->
+      <form class="d-flex mx-auto my-2 flex-wrap" role="search" method="GET" action="/listings/search">
+        <input class="form-control me-2 search-input" type="search" name="query" placeholder="Search destination"/>
+        <!-- Full button on desktop, icon-only on mobile -->
+        <button class="btn btn-search d-none d-md-inline" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>Search
+        </button>
+        <button class="btn btn-search d-md-none" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <!-- Right Side Links -->
+      <div class="navbar-nav ms-auto text-center">
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <% if(!currUser) { %>
+          <a class="nav-link" href="/signup"><b>Signup</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } else { %>
+          <a class="nav-link" href="/logout">Logout</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

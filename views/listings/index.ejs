@@ -1,0 +1,193 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+  .category-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Scroll only activates on smaller screens */
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  #filters a {
+    text-decoration: none !important;
+    color: inherit;
+  }
+
+
+  .filter {
+    margin-top: 1rem;
+    text-align: center;
+    margin-right: 2rem;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+  }
+
+  /* Tax toggle (default full version) */
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3rem;
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Scroll + smaller icons on mobile */
+  @media (max-width: 992px) {
+    #filters {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter {
+      flex: 0 0 auto;
+      margin-right: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .filter i {
+      font-size: 1rem;
+    }
+
+    .filter p {
+      font-size: 0.7rem;
+    }
+
+    /* Compact toggle version */
+    .tax-toggle {
+      border: none;
+      padding: 0.3rem 0.5rem;
+      margin-left: 2rem;
+      height: auto;
+    }
+
+    .tax-toggle label {
+      display: none; /* hide text label */
+    }
+
+    .form-check-input {
+      width: 2rem;
+      height: 1rem;
+    }
+  }
+</style>
+
+<div class="category-container">
+  <div id="filters" class="category-buttons">
+    <a href="/listings?category=Trending" class="filter <%= category === 'Trending' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </a>
+    <a href="/listings?category=Rooms" class="filter <%= category === 'Rooms' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </a>
+    <a href="/listings?category=Iconic cities" class="filter <%= category === 'Iconic cities' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Iconic cities</p>
+    </a>
+    <a href="/listings?category=Mountains" class="filter <%= category === 'Mountains' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-mountain-sun"></i></div>
+      <p>Mountains</p>
+    </a>
+    <a href= "/listings?category=Castle" class="filter <%= category === 'Castle' ? 'active' : '' %>">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castle</p>
+    </a>
+    <a href= "/listings?category=Amazing pools" class="filter <%= category === 'Amazing pools' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amazing pools</p>
+    </a>
+    <a href= "/listings?category=Camping" class="filter <%= category === 'Camping' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </a>
+    <a href="/listings?category=Farms" class="filter <%= category === 'Farms' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-cow"></i></div>
+      <p>Farms</p>
+    </a>
+    <a href="/listings?category=Archtict" class="filter <%= category === 'Archtict' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Archtict</p>
+    </a>
+    <a href="/listings?category=Sea" class="filter <%= category === 'Sea' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-water"></i></div>
+      <p>Sea</p>
+    </a>
+    <a href="/listings?category=Theater" class="filter <%= category === 'Theater' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-masks-theater"></i></div>
+      <p>Theater</p>
+    </a>
+  </div>
+
+  <!-- Compact tax toggle -->
+  <div class="tax-toggle" id="tax-toggle">
+    <div class="form-check form-switch form-check-reverse">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+      <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of allListings ){ %>
+    <a class="listing-link" href="/listings/<%= listing._id %>">
+    <div class="card col listing-card">
+      <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+      <div class="card-img-overlay"></div>
+      <div class="card-body">
+       <p class="card-text">
+            <b><%= listing.title %> </b><br>
+            &#8377;<%= listing.price.toLocaleString("en-IN")%> / night
+            <i class= "tax-info"> &nbsp;&nbsp; +18% GST</i>
+        </p>
+      </div>
+    </div>
+    </a>
+    <% } %>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const checkbox = document.getElementById('switchCheckDefault');
+  const taxInfos = document.querySelectorAll('.tax-info');
+
+  // update visibility based on checkbox.checked
+  function updateTaxVisibility() {
+    taxInfos.forEach(info => {
+      info.style.display = checkbox.checked ? 'inline' : 'none';
+    });
+  }
+
+  // initialize on page load
+  updateTaxVisibility();
+
+  // update whenever checkbox changes
+  checkbox.addEventListener('change', updateTaxVisibility);
+});
+</script>

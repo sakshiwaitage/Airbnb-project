@@ -1,0 +1,125 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+    flex: 1;
+}
+.navbar{
+    height: 5 rems;
+    background-color: white;
+}
+
+.fa-compass{
+    color: #fe424d;
+    font-size: 2 rem;
+}
+
+.nav-link{
+    color: #222222 !important;
+}
+
+/*footer*/
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-links, .f-info-socials, .f-info-brand{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-info-socials i {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+.f-info{
+    text-align: center;
+    height: 8rem !important;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+/*cards*/
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100%;
+    /* height: 200px !important; */
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 400;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+
+.add-btn, .edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* show page */
+.show-img{
+    height: 27vh !important;
+    width: 80vh !important;
+    object-fit: cover !important;
+}
+
+.btns{
+    display: flex;
+    gap: 1rem; /* space between edit and delete buttons */
+    margin-top: 0.5rem !important; /* reduces space above buttons */
+
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 0.3rem !important;
+}
+
+.image-preview {
+  text-align: center;   /* centers inline elements like <img> */
+}
+
+.image-preview img {
+  display: inline-block;  /* ensures it can be centered properly */
+  width: 250px;           /* or whatever resized width you want */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
