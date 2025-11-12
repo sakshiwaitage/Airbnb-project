@@ -1,12 +1,89 @@
 <% layout("/layouts/boilerplate") %>
+<style>
+@media (min-width: 992px) {
+  .show-img {
+    width: 80% !important;
+    height: 50vh !important;  
+    object-fit: cover;
+    border-radius: 10px;
+  }
 
-<div class="row mt-3">
-  <div class="col-8 offset-3">
+  .show-card.listing-card {
+    width: 100% !important;
+    margin: 1rem auto;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  
+  .col-8.offset-3,
+  .col-6.offset-3 {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+  }
+
+  .show-card.listing-card {
+    margin: 1rem auto !important;
+    width: 95% !important;
+  }
+
+  .show-card .card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .show-img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 15rem !important;
+    object-fit: cover;
+    display: block;
+  }
+
+  form.needs-validation {
+    width: 95% !important;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  form.needs-validation label,
+  form.needs-validation textarea,
+  form.needs-validation fieldset {
+    text-align: left;
+  }
+
+  form.needs-validation .btn-outline-dark {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .row .card {
+    margin: 0.5rem auto !important;
+    width: 95% !important;
+  }
+
+  .row.mt-3 {
+    margin: 0 !important;
+  }
+}
+
+.review-card {
+  margin: 1rem; 
+}
+</style>
+
+<div class="row mt-3 justify-content-center">
+  <div class="col-lg-8 col-md-10 col-12">
     <h3><%= listing.title %></h3>
-  </div>
 
-  <div class="card col-6 offset-3 show-card listing-card">
-    <div class="card listing-card" style="width: 18rem;">
+    <div class="card show-card listing-card">
       <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
       <div class="card-body">
         <p class="card-text"><i>Owned by <%= listing.owner?.username || "Unknown" %></i></p>
@@ -16,23 +93,20 @@
         <p class="card-text"><%= listing.country %></p>
       </div>
     </div>
-  </div>
 
-  <% if(currUser && listing.owner?._id?.equals(currUser._id)){ %>
-  <div class="btns">
-    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn col-1 offset-3 ">Edit</a>
-    <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-      <button class="btn btn-dark offset-5">Delete</button>
-    </form>
-  </div>
-  <% } %>
+    <% if(currUser && listing.owner?._id?.equals(currUser._id)){ %>
+    <div class="btns d-flex align-items-center mt-2">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-2">Edit</a>
+      <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+        <button class="btn btn-dark">Delete</button>
+      </form>
+    </div>
+    <% } %>
 
-  <div class="col-8 offset-3 mb-3">
     <hr>
     <% if(currUser) { %>
     <h4>Review</h4>
     <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
-      <!-- Rating Inputs -->
       <div class="mb-3 mt-3">
         <label class="form-label" for="rating">Rating</label>
         <fieldset class="starability-slot">
@@ -56,20 +130,20 @@
     <hr>
 
     <% if(listing.reviews?.length > 0) { %>
-      <div class="row">
-        <% for(review of listing.reviews) { %>
-          <div class="card col-5 ms-3 mb-3">
-            <div class="card-body">
-              <h5 class="card-title">@<%= review.author?.username || "Anonymous" %></h5>
-              <p class="starability-result card-text mb-1" data-rating="<%= review.rating %>"></p>
-              <p class="card-text"><%= review.comment %></p>
-            </div>
-            <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-2">
-              <button class="btn btn-sm btn-dark mt-2">Delete</button>
-            </form>
-          </div>
-        <% } %>
+    <div class="row">
+      <% for(review of listing.reviews) { %>
+      <div class="card review-card col-lg-5 col-md-6 col-12 mb-3">
+        <div class="card-body">
+          <h5 class="card-title">@<%= review.author?.username || "Anonymous" %></h5>
+          <p class="starability-result card-text mb-1" data-rating="<%= review.rating %>"></p>
+          <p class="card-text"><%= review.comment %></p>
+        </div>
+        <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-2">
+          <button class="btn btn-sm btn-dark mt-2">Delete</button>
+        </form>
       </div>
+      <% } %>
+    </div>
     <% } %>
   </div>
 </div>

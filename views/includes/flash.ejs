@@ -1,13 +1,38 @@
 <% if(success && success.length > 0){ %>
-    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 mt-2" role="alert">
-        <%= success[0] %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+  <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+      <%= success[0] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 <% } %>
 
 <% if(error && error.length > 0){ %>
-    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3 mt-2" role="alert">
-        <%= error[0] %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+  <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+      <%= error[0] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 <% } %>
+
+<style>
+/* ✅ Responsive flash messages */
+@media (max-width: 768px) {
+  .alert {
+    width: 90% !important;
+    margin: 10px auto !important;
+    font-size: 0.9rem !important;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .alert .btn-close {
+    transform: scale(0.9);
+  }
+}
+
+/* 💻 Desktop view */
+@media (min-width: 769px) {
+  .alert {
+    width: 60% !important;
+    margin: 10px auto !important;
+    text-align: center;
+  }
+}
+</style>
