@@ -1,5 +1,6 @@
 <% layout("/layouts/boilerplate") %>
 <style>
+/* Desktop */
 @media (min-width: 992px) {
   .show-img {
     width: 80% !important;
@@ -14,29 +15,28 @@
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-
   .container {
     max-width: 100% !important;
-    padding: 0 !important;
-  }
-
-  
-  .col-8.offset-3,
-  .col-6.offset-3 {
-    width: 100% !important;
-    margin: 0 !important;
     padding: 0 1rem !important;
   }
 
+  .col-lg-8, .col-md-10, .col-12 {
+    width: 100% !important;
+    margin: 0 auto;
+    padding: 0 0.5rem !important;
+  }
+
   .show-card.listing-card {
-    margin: 1rem auto !important;
-    width: 95% !important;
+    margin: 1rem 0 !important;
+    width: 100% !important;
   }
 
   .show-card .card {
     width: 100% !important;
     max-width: 100% !important;
+    margin-bottom: 1.5rem !important; /* space between stacked cards */
   }
 
   .show-img {
@@ -45,43 +45,63 @@
     max-height: 15rem !important;
     object-fit: cover;
     display: block;
+    margin-bottom: 1rem;
   }
 
   form.needs-validation {
-    width: 95% !important;
-    margin: 0 auto;
+    width: 100% !important;
+    margin: 1rem auto;
     text-align: left;
   }
 
-  form.needs-validation label,
-  form.needs-validation textarea,
-  form.needs-validation fieldset {
-    text-align: left;
+  form.needs-validation .mb-3 {
+    margin-bottom: 1.5rem;
   }
 
   form.needs-validation .btn-outline-dark {
     display: block;
-    margin: 0 auto;
+    margin: 0.5rem auto;
+  }
+
+  .review-card {
+    margin-bottom: 1.5rem !important; /* vertical spacing between reviews */
+    padding: 1rem;
+    width: 100% !important;
   }
 
   .row .card {
-    margin: 0.5rem auto !important;
-    width: 95% !important;
-  }
-
-  .row.mt-3 {
-    margin: 0 !important;
+    gap: 1rem;
   }
 }
 
-.review-card {
-  margin: 1rem; 
+@media (max-width: 768px) {
+  h3.listing-title {
+    font-size: 1.5rem; /* slightly smaller than desktop */
+    margin-top: 1rem;  /* spacing from top */
+    white-space: nowrap; /* try to keep it in one line */
+    overflow: hidden;    /* hide overflow if it’s too long */
+     /* show "..." if text is too long */
+  }
 }
+
+
+.btn-delete {
+  background-color: #FF6F61; /* replace with your logo color */
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #e55a4d; /* slightly darker on hover */
+  color: white;
+}
+
 </style>
 
 <div class="row mt-3 justify-content-center">
   <div class="col-lg-8 col-md-10 col-12">
-    <h3><%= listing.title %></h3>
+    <h3 class="listing-title"><%= listing.title %></h3>
 
     <div class="card show-card listing-card">
       <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
@@ -98,7 +118,7 @@
     <div class="btns d-flex align-items-center mt-2">
       <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-2">Edit</a>
       <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-        <button class="btn btn-dark">Delete</button>
+        <button class="btn btn-delete btn-dark">Delete</button>
       </form>
     </div>
     <% } %>
@@ -139,7 +159,7 @@
           <p class="card-text"><%= review.comment %></p>
         </div>
         <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-2">
-          <button class="btn btn-sm btn-dark mt-2">Delete</button>
+          <button class="btn btn-delete btn-dark mt-2">Delete</button>
         </form>
       </div>
       <% } %>
